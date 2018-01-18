@@ -31,9 +31,15 @@ public class Config {
 
     private String rootPath;
 
+    private String bossGroupEventLoopNumber;
+
+    private String workerGroupEventLoopNumber;
+
 
     private Config() {
         rootPath = InternalClass.properties.getProperty("root");
+        bossGroupEventLoopNumber = InternalClass.properties.getProperty("bossGroupEventLoopNumber");
+        workerGroupEventLoopNumber = InternalClass.properties.getProperty("workerGroupEventLoopNumber");
     }
 
     public String getRootPath() {
@@ -44,6 +50,19 @@ public class Config {
         this.rootPath = rootPath;
     }
 
+    public String getBossGroupEventLoopNumber() {
+        return bossGroupEventLoopNumber;
+    }
 
+    public void setBossGroupEventLoopNumber(String bossGroupEventLoopNumber) {
+        this.bossGroupEventLoopNumber = bossGroupEventLoopNumber;
+    }
 
+    public String getWorkerGroupEventLoopNumber() {
+        return workerGroupEventLoopNumber;
+    }
+
+    public void setWorkerGroupEventLoopNumber(String workerGroupEventLoopNumber) {
+        this.workerGroupEventLoopNumber = workerGroupEventLoopNumber;
+    }
 }

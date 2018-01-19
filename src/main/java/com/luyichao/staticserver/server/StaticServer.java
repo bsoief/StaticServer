@@ -1,7 +1,7 @@
 package com.luyichao.staticserver.server;
 
 import com.luyichao.staticserver.config.Config;
-import com.luyichao.staticserver.handler.ProcessHandler;
+import com.luyichao.staticserver.server.handler.ProcessHandler;
 import com.luyichao.staticserver.util.TypeConverter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

@@ -11,25 +11,28 @@ public class Config {
     }
 
     private static class InternalClass {
+        public static Properties properties = new Properties();
+
+        static {
+            try {
+                InputStream inputStream = InternalClass.class.getClassLoader().getResourceAsStream("application.properties");
+                properties.load(inputStream);
+            } catch (IOException e) {
+                System.err.println(e);
+            }
+        }
+
         private static Config config = new Config();
 
         public static Config getInstance() {
             return config;
         }
 
-        public static Properties properties = new Properties();
-
-        static {
-            try {
-                InputStream inputStream = InternalClass.class.getClassLoader().getResourceAsStream("");
-                properties.load(inputStream);
-            } catch (IOException e) {
-                System.err.println(e);
-            }
-        }
     }
 
     private String rootPath;
+
+    private String port;
 
     private String bossGroupEventLoopNumber;
 
@@ -37,9 +40,11 @@ public class Config {
 
 
     private Config() {
-        rootPath = InternalClass.properties.getProperty("root");
-        bossGroupEventLoopNumber = InternalClass.properties.getProperty("bossGroupEventLoopNumber");
-        workerGroupEventLoopNumber = InternalClass.properties.getProperty("workerGroupEventLoopNumber");
+        Properties properties = InternalClass.properties;
+        rootPath = properties.getProperty("root");
+        port = properties.getProperty("port");
+        bossGroupEventLoopNumber = properties.getProperty("bossGroupEventLoopNumber");
+        workerGroupEventLoopNumber = properties.getProperty("workerGroupEventLoopNumber");
     }
 
     public String getRootPath() {
@@ -64,5 +69,13 @@ public class Config {
 
     public void setWorkerGroupEventLoopNumber(String workerGroupEventLoopNumber) {
         this.workerGroupEventLoopNumber = workerGroupEventLoopNumber;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 }

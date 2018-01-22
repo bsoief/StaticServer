@@ -7,5 +7,6 @@ public class Main {
 
         StaticServer server = StaticServer.getInstance();
         server.start();
+
     }
 }

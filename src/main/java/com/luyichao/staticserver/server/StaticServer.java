@@ -82,9 +82,9 @@ public class StaticServer {
             ChannelFuture future = bootstrap.bind(port).sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
-
+            System.err.println(e);
         } catch (Throwable t) {
-
+            System.err.println(t);
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

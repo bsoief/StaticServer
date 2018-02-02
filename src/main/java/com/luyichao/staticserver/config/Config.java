@@ -44,7 +44,7 @@ public class Config {
         rootPath = properties.getProperty("root");
         port = properties.getProperty("port");
         bossGroupEventLoopNumber = properties.getProperty("bossGroupEventLoopNumber");
-        workerGroupEventLoopNumber = properties.getProperty("workerGroupEventLoopNumber");
+        workerGroupEventLoopNumber = properties.getProperty("workGroupEventLoopNumber");
     }
 
     public String getRootPath() {

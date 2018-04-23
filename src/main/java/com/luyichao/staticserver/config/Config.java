@@ -1,5 +1,6 @@
 package com.luyichao.staticserver.config;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -42,6 +43,22 @@ public class Config {
     private Config() {
         Properties properties = InternalClass.properties;
         rootPath = properties.getProperty("root");
+        String realRootPath = rootPath.replaceAll("/", File.separator);
+
+        String os = System.getProperty("os.name");
+        if (os.toLowerCase().startsWith("win")) {
+            if (!rootPath.matches(".:\\\\")) {
+                String parentPath = this.getClass().getResource("/").getPath().replaceAll("/", File.separator);
+                rootPath = parentPath + File.separator + rootPath;
+            }
+        } else {
+            if (rootPath.startsWith(File.separator)) {
+                String parentPath = this.getClass().getResource("/").getPath().replaceAll("/", File.separator);
+                rootPath = parentPath + File.separator + rootPath;
+            }
+        }
+
+        File directory = new File("");
         port = properties.getProperty("port");
         bossGroupEventLoopNumber = properties.getProperty("bossGroupEventLoopNumber");
         workerGroupEventLoopNumber = properties.getProperty("workGroupEventLoopNumber");

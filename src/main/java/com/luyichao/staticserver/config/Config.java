@@ -3,6 +3,9 @@ package com.luyichao.staticserver.config;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 public class Config {
@@ -43,12 +46,12 @@ public class Config {
     private Config() {
         Properties properties = InternalClass.properties;
         rootPath = properties.getProperty("root");
-        String realRootPath = rootPath.replaceAll("/", File.separator);
+        String realRootPath = rootPath.replace("/", File.separator);
 
         String os = System.getProperty("os.name");
         if (os.toLowerCase().startsWith("win")) {
             if (!rootPath.matches(".:\\\\")) {
-                String parentPath = this.getClass().getResource("/").getPath().replaceAll("/", File.separator);
+                String parentPath = this.getClass().getResource("/").getPath().replace("/", File.separator);
                 rootPath = parentPath + File.separator + rootPath;
             }
         } else {
@@ -57,8 +60,12 @@ public class Config {
                 rootPath = parentPath + File.separator + rootPath;
             }
         }
+        try {
+            rootPath = URLDecoder.decode(rootPath, Charset.defaultCharset().toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        File directory = new File("");
         port = properties.getProperty("port");
         bossGroupEventLoopNumber = properties.getProperty("bossGroupEventLoopNumber");
         workerGroupEventLoopNumber = properties.getProperty("workGroupEventLoopNumber");
